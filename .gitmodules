@@ -1,0 +1,6 @@
+[submodule "kilo-code"]
+	path = kilo-code
+	url = file:///home/toxic/estate/ranch/kilo-code
+[submodule "kilo-cli"]
+	path = kilo-cli
+	url = file:///home/toxic/estate/ranch/kilo-cli
