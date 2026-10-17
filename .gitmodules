@@ -1,6 +1,6 @@
 [submodule "kilo-code"]
 	path = kilo-code
-	url = file:///home/toxic/estate/ranch/kilo-code
+	url = https://github.com/toxicwind/kilo-code.git
 [submodule "kilo-cli"]
 	path = kilo-cli
-	url = file:///home/toxic/estate/ranch/kilo-cli
+	url = https://github.com/toxicwind/kilo-cli.git
