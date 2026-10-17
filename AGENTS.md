@@ -1,7 +1,8 @@
 # AGENTS.md — ranch/kilo monorepo (master project)
 
-> Refines: none higher (self-contained master for the kappa forks on this box).
-> A shallow root here + per-subproject AGENTS.md where each repo owns its rules.
+> **Refines:** `/home/toxic/estate/AGENTS.md` (the estate control-plane). Asserts
+> **"refines, never contradicts"** the estate contract above it. A shallow root
+> here + per-subproject AGENTS.md where each repo owns its rules.
 
 ## Mission
 
@@ -16,7 +17,7 @@ scratch.
 |---|---|---|---|
 | Kappa Code (engine) | `kappa-code/` | `Kilo-Org/kilo-code` → `toxicwind/kappa-code` | CLI/TUI/agent runtime (fork of opencode). Monorepo with 20+ packages. **Fork feature: browser-fingerprint HTTP transport** (`HttpOptions.fingerprint`). Build: `make` / `make:nativelink` / `kmake-test` tmux grid. |
 | Kappa CLI repo | `kappa-cli/` | `Kilo-Org/kilo-cli` → `toxicwind/kappa-cli` | Full upstream mirror, pinned `6f08110d4`. Bump via `FORKS.md` procedure. |
-| Kappa × ble.sh | `kappa-ble/` | local (system integration, `file://…/ranch/kilo/kappa-ble`) | ble.sh first-class integration: `contrib/kappa.bash` (+`contrib/kappa/tooling.bash`), `\q{contrib/kappa-info}` prompt unit, `Ctrl-x k`. |
+| Kappa × ble.sh | `kappa-ble/` | local (system integration, `ranch/kilo/kappa-ble`) | ble.sh first-class integration: `contrib/kappa.bash` (+`contrib/kappa/tooling.bash`), `\q{contrib/kappa-info}` prompt unit, `Ctrl-x k`. |
 
 Always work inside the subproject's own checkout (`ranch/kilo/<name>`) and let
 each subproject's nested `AGENTS.md` own its rules.
@@ -45,7 +46,7 @@ Use the tmux grid so the estate 2s shim (which SIGKILLs >2s `bun test` in
 interactive shells) cannot kill the run:
 
 ```
-kmake-test start    # 4-pane grid; per-pane full output to /home/toxic/tmp/kilo-compact/kmake/pane-*.{log,err}
+kmake-test start    # 4-pane grid; per-pane full output to <scratch>/kilo-compact/kmake/pane-*.{log,err}
 kmake-test status   # scrape the panes
 kmake-test kill
 ```
