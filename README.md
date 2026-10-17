@@ -11,6 +11,7 @@ between the CLI engine and the CLI tooling repo, and the build of the main
 |---|---|---|---|
 | Kilo Code (engine) | `kilo-code/` | `Kilo-Org/kilo-code` → `toxicwind/kilo-code` | CLI/TUI/agent runtime (fork of opencode). Active dev. **Fork feature: browser-fingerprint HTTP transport.** |
 | Kilo CLI repo | `kilo-cli/` | `Kilo-Org/kilo-cli` → `toxicwind/kilo-cli` | Full mirror, pinned `6f08110d4`. |
+| Kilo × ble.sh | `kilo-ble/` | local (toxicwind system-integration) | First-class Kilo integration for ble.sh (bash line editor): env-sanity fix, `\q{contrib/kilo-info}` prompt unit, `Ctrl-x k` launch. |
 
 Both are registered as git submodules bound to the **local working forks** under
 `ranch/kilo-code` and `ranch/kilo-cli`, so they appear here without a redundant

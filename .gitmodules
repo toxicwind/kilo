@@ -4,3 +4,6 @@
 [submodule "kilo-cli"]
 	path = kilo-cli
 	url = https://github.com/toxicwind/kilo-cli.git
+[submodule "kilo-ble"]
+	path = kilo-ble
+	url = file:///home/toxic/estate/ranch/kilo/kilo-ble
