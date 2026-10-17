@@ -1,9 +1,9 @@
 [submodule "kilo-code"]
-	path = kilo-code
+	path = kappa-code
 	url = https://github.com/toxicwind/kilo-code.git
 [submodule "kilo-cli"]
-	path = kilo-cli
+	path = kappa-cli
 	url = https://github.com/toxicwind/kilo-cli.git
 [submodule "kilo-ble"]
-	path = kilo-ble
+	path = kappa-ble
 	url = file:///home/toxic/estate/ranch/kilo/kilo-ble
