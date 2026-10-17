@@ -1,11 +1,11 @@
 # AGENTS.md — ranch/kilo monorepo (master project)
 
-> Refines: none higher (self-contained master for the Kilo forks on this box).
+> Refines: none higher (self-contained master for the kappa forks on this box).
 > A shallow root here + per-subproject AGENTS.md where each repo owns its rules.
 
 ## Mission
 
-Single entry point for all Kilo work on this host. Owns the relationship
+Single entry point for all Kappa work on this host. Owns the relationship
 between the three subprojects, the main-binary build, and the system-shell
 integration. Everything lands here or in a subproject below — never ad-hoc
 scratch.
@@ -14,22 +14,26 @@ scratch.
 
 | Subproject | Path | Origin | Owns |
 |---|---|---|---|
-| Kilo Code (engine) | `kilo-code/` | `toxicwind/kilo-code.git` (fork of `Kilo-Org/kilo-code`) | CLI/TUI/agent runtime. Fork feature: browser-fingerprint HTTP transport (`HttpOptions.fingerprint`). Build: `make` / `make:nativelink` / `kmake-test` tmux grid. |
-| Kilo CLI repo | `kilo-cli/` | `toxicwind/kilo-cli.git` (fork of `Kilo-Org/kilo-cli`) | Full upstream mirror, pinned `6f08110d4`. Bump via `FORKS.md` procedure. |
-| Kilo × ble.sh | `kilo-ble/` | local (system integration, `file://…/ranch/kilo/kilo-ble`) | ble.sh first-class integration: `contrib/kilo.bash` (+`contrib/kilo/tooling.bash`), `\q{contrib/kilo-info}` prompt unit, `Ctrl-x k`. |
+| Kappa Code (engine) | `kappa-code/` | `Kilo-Org/kilo-code` → `toxicwind/kappa-code` | CLI/TUI/agent runtime (fork of opencode). Monorepo with 20+ packages. **Fork feature: browser-fingerprint HTTP transport** (`HttpOptions.fingerprint`). Build: `make` / `make:nativelink` / `kmake-test` tmux grid. |
+| Kappa CLI repo | `kappa-cli/` | `Kilo-Org/kilo-cli` → `toxicwind/kappa-cli` | Full upstream mirror, pinned `6f08110d4`. Bump via `FORKS.md` procedure. |
+| Kappa × ble.sh | `kappa-ble/` | local (system integration, `file://…/ranch/kilo/kappa-ble`) | ble.sh first-class integration: `contrib/kappa.bash` (+`contrib/kappa/tooling.bash`), `\q{contrib/kappa-info}` prompt unit, `Ctrl-x k`. |
 
 Always work inside the subproject's own checkout (`ranch/kilo/<name>`) and let
 each subproject's nested `AGENTS.md` own its rules.
 
-## Building the main `kilo` binary
+## Building the main `kappa` binary
 
-In `kilo-code/`:
+In `kappa-code/`:
 
-- `bun run make` — install + build single binary → `dist/@kilocode/*/bin/kilo`.
-- `bun run make:nativelink` — same with `BUN_BUILD_REMOTE_CACHE` (needs the
-  estate NativeLink REAPI at `127.0.0.1:25155`, started via pitchfork
-  `estate/nativelink`).
-- Deploy target on this box: `/usr/lib/kilo/kilo`.
+- `bun run make` — install + build single binary → `dist/@kappacode/*/bin/kappa`.
+- `bun run make:nativelink` — same, using the estate build daemon (mise remote
+  cache at `127.0.0.1:25148`). `BUN_BUILD_REMOTE_CACHE` is dead code — bun does
+  not support it; the mise `[task_config.cache]` section is the SSOT.
+- Deploy target on this box: `/usr/lib/kappa/kappa`.
+
+Kappa pack the CLI: `KILO_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/opencode
+script/build.ts --single` (skip `--skip-install` only after a clean
+`bun install`).
 
 Note: the vendored checkout may lack build tooling (husky/vite/tsgo/
 node-gyp-build). That is a checkout-infra gap, not a feature defect — repair the
@@ -47,7 +51,7 @@ kmake-test kill
 ```
 
 All pane commands write full output to files — no `2>&1`, no `|tail`, no
-`/dev/null` (two-sec guard).
+`/dev/null` (kairos guard).
 
 ## Rules (estate + guard doctrine)
 
@@ -58,10 +62,12 @@ All pane commands write full output to files — no `2>&1`, no `|tail`, no
 - **Additive only.** The box is live. Never disable a peer/daemon.
 - **Secrets** from the keyring (`ranch/secretsmith`) or `~/.secrets`, never
   committed. Keyed provider options use `{env:…}`.
-- **`kilocode_change` markers** on shared opencode files; Kilo-specific code in
+- **`kappacode_change` markers** on shared opencode files; Kappa-specific code in
   `*kilocode*` dirs needs none. Run `check-opencode-annotations` after edits.
 - **Verify before claiming complete** — fresh command, exit code, evidence.
 - **Push to canonical main.** Never force-push without `backup/main-<date>`.
   Never push to `evmts`/`super-ralph`.
 - `repository-quality-gate-fixer` and the SDD prompt trio live in
   `ranch/repository-quality-gate-fixer`; keep their gates green before merge.
+- **Follow the vibe meta-todo** (root AGENTS.md): race faster with borrow +
+  papers during the task; after research spawn the next 6 complex todos.
