@@ -14,7 +14,7 @@ between the CLI engine, the CLI tooling repo, and the build of the main
 | Kappa × ble.sh | `kappa-ble/` | local (toxicwind system-integration) | First-class kappa integration for ble.sh (bash line editor): env-sanity fix, `\q{contrib/kappa-info}` prompt unit, `Ctrl-x k` launch. |
 
 Both are registered as git submodules bound to the **local working forks** under
-`ranch/kappa-code` and `ranch/kappa-cli`, so they appear here without a redundant
+`ranch/kappa/kappa-code` and `ranch/kappa/kappa-cli`, so they appear here without a redundant
 clone.
 
 ## Fork feature: browser-fingerprint HTTP transport
@@ -51,7 +51,7 @@ Implementation lives in kappa Code:
 
 ## Building the main `kappa` binary
 
-From the monorepo root (`/home/toxic/estate/ranch/kilo/kappa-code`):
+From the monorepo root (`/home/toxic/estate/ranch/kappa/kappa-code`):
 
 ```bash
 bun install          # first time / after dep changes (long)
