@@ -55,7 +55,7 @@ From the monorepo root (`/home/toxic/estate/ranch/kappa/kappa-code`):
 
 ```bash
 bun install          # first time / after dep changes (long)
-KILO_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/cli script/build.ts --single --skip-install
+KAPPA_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/cli script/build.ts --single --skip-install  # KAPPA_ prefix is the live name; omit the flag to bundle+pinned-hash the sandbox bwrap (release-grade)
 ```
 
 Output: `packages/cli/dist/@kappacode/cli-linux-x64/bin/kappa` (scoped package output).

@@ -32,7 +32,7 @@ In `kappa-code/`:
   not support it; the mise `[task_config.cache]` section is the SSOT.
 - Deploy target on this box: `/usr/lib/kappa/kappa`.
 
-Kappa pack the CLI: `KILO_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/opencode
+Kappa pack the CLI: `KAPPA_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/cli
 script/build.ts --single` (skip `--skip-install` only after a clean
 `bun install`).
 
