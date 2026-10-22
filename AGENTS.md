@@ -46,7 +46,7 @@ Use the tmux grid so the estate 2s shim (which SIGKILLs >2s `bun test` in
 interactive shells) cannot kill the run:
 
 ```
-kmake-test start    # 4-pane grid; per-pane full output to <scratch>/kappa-compact/kmake/pane-*.{log,err}
+kmake-test start    # 4-pane grid; per-pane full output to ~/.local/state/kappa/kmake/pane-*.{log,err}
 kmake-test status   # scrape the panes
 kmake-test kill
 ```
