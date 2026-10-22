@@ -1,9 +1,0 @@
-[submodule "kilo-cli"]
-	path = kappa-cli
-	url = https://github.com/toxicwind/kilo-cli.git
-[submodule "kilo-ble"]
-	path = kappa-ble
-	url = file:///home/toxic/estate/ranch/kilo/kilo-ble
-[submodule "kappa-code"]
-	path = kappa-code
-	url = https://github.com/toxicwind/kappa-code.git
