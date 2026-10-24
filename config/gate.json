@@ -1,0 +1,27 @@
+{
+  "proseTokenBudget": 900,
+  "pivotBudget": 2,
+  "repetitionJaccard": 0.82,
+  "raceSeconds": 8,
+  "narration": {
+    "actionPromises": "\\b(?:on it|running (?:it )?now|starting (?:on )?that|handling (?:it|that)|kicking (?:it|this) off|i[''']ll (?:go|handle|run|start)|working on it|got it, running|let me (?:just )?(?:check|try|look)|recalibrat)\\b",
+    "escalateAfter": 1,
+    "criticalAfter": 3,
+    "ttlMinutes": 10
+  },
+  "semanticBrake": {
+    "windowTurns": 6,
+    "killAt": 0.62,
+    "detectors": [
+      "semantic",
+      "action",
+      "ngram",
+      "edit",
+      "compression"
+    ]
+  },
+  "coldTool": {
+    "lookbackTurns": 4,
+    "maxCandidates": 5
+  }
+}

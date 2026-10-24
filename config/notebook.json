@@ -1,0 +1,64 @@
+{
+  "session": "probe-1792873493914",
+  "base": "https://freeinference.org/v1",
+  "framing": {
+    "probed": false,
+    "models": {
+      "verdict": "Buffered",
+      "path": "/models",
+      "evidence": {
+        "status": 200,
+        "ctype": "application/json",
+        "bytes": 3296
+      }
+    },
+    "completions": {
+      "verdict": "unprobed",
+      "path": null,
+      "evidence": null
+    }
+  },
+  "reasoningPassthrough": {
+    "honored": false,
+    "field": null,
+    "model": "glm-5.3-flash"
+  },
+  "loopTendency": {
+    "selfNgram": 0,
+    "semantic": null,
+    "runs": 5
+  },
+  "narrationTendency": {
+    "runs": 5,
+    "violations": 0,
+    "actionPromises": 0
+  },
+  "catalog": [],
+  "ledger": [],
+  "probes": [
+    {
+      "path": "/models",
+      "status": 200,
+      "ctype": "application/json",
+      "bytes": 3296,
+      "verdict": "Buffered",
+      "note": "{\"object\":\"list\",\"data\":[{\"id\":\"glm-5.3-flash\",\"name\":\"GLM-5.3 Flash\",\"object\":\"model\",\"created\":1792713590,\"owned_by\":\""
+    },
+    {
+      "kind": "completions",
+      "model": "minimax-m3",
+      "honored": false,
+      "selfNgram": 0,
+      "narration": 0,
+      "promises": 0
+    },
+    {
+      "kind": "completions",
+      "model": "glm-5.3-flash",
+      "honored": false,
+      "selfNgram": 0,
+      "narration": 0,
+      "promises": 0
+    }
+  ]
+}

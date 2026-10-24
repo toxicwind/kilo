@@ -67,7 +67,7 @@ All pane commands write full output to files — no `2>&1`, no `|tail`, no
   `*kappacode*` dirs needs none. Run `check-opencode-annotations` after edits.
 - **Verify before claiming complete** — fresh command, exit code, evidence.
 - **Push to canonical main.** Never force-push without `backup/main-<date>`.
-  Never push to `evmts`/`super-ralph`.
+  Never push to `evmts`/`corral`.
 - `repository-quality-gate-fixer` and the SDD prompt trio live in
   `ranch/repository-quality-gate-fixer`; keep their gates green before merge.
 - **Follow the vibe meta-todo** (root AGENTS.md): race faster with borrow +
