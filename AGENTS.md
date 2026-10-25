@@ -30,7 +30,7 @@ In `kappa-code/`:
 - `bun run make:nativelink` — same, using the estate build daemon (mise remote
   cache at `127.0.0.1:25148`). `BUN_BUILD_REMOTE_CACHE` is dead code — bun does
   not support it; the mise `[task_config.cache]` section is the SSOT.
-- Deploy target on this box: `/usr/lib/kappa/kappa`.
+- Deploy target on this box: `~/.local/bin/kappa` (symlink into `kappa-code/packages/cli/dist/.../bin/kappa`, per the estate bin contract); the older root-installed copy lives at `/usr/lib/kappa/kappa`.
 
 Kappa pack the CLI: `KAPPA_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/cli
 script/build.ts --single` (skip `--skip-install` only after a clean
