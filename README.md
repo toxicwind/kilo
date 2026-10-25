@@ -49,9 +49,39 @@ Implementation lives in kappa Code:
 - `packages/llm/src/route/executor.ts` — strips marker, injects Chrome headers (kappacode_change)
 - `packages/llm/test/executor.test.ts` — fixture-first coverage of the fingerprint path
 
+## Fork feature: Flail Gate (model-agnostic loop/narration resilience)
+
+Kappa Code ships a model-agnostic "flail gate" that stops agents from silently
+flailing — repeating the same tool call, narrating instead of acting, or
+re-deriving the same reasoning — regardless of which provider/model is served
+(OpenCompatible, minimax-m3, qwen3.6-35b, argon, nemotron, kimi-k3, …). It
+fingerprints what the endpoint actually does rather than trusting a vendor name.
+
+Four self-contained pieces, integrated into the runtime:
+
+- **Framing-aware discovery** — `GET /v1/models*` is probed for
+  `Buffered | SseCorrupted | Sse | Absent` (OpenShell #1772); an SSE response on
+  `/v1/models` is recorded as `SseCorrupted`, not a discovery win.
+- **Run-scoped narration guard** — action-promise keywords + zero tool calls
+  across a `runId` ⇒ violation; escalates and clears on success.
+- **Semantic brake** — five detectors (semantic, action, n-gram, edit,
+  compression) over the reasoning channel *and* tool-call JSON; on repetition it
+  forces an orthogonal fork + cold-tool re-rank (EMNLP 2026).
+- **Reasoning Replay Ledger** — persists `reasoning_content` when the endpoint
+  honours it and re-injects the compacted `{turn, claim, evidence, next}` ledger.
+
+Thresholds come from `config/gate.json` and `config/notebook.json` (measured
+from live probes, never a vendor name). Integration points:
+
+- `packages/cli/src/kappacode/flail-gate.ts` — gate orchestrator (Effect)
+- `packages/cli/src/session/run-loop.ts` — run loop with the gate wired in
+- `packages/core/src/config/gate.ts` + `packages/core/src/narration-guard.ts`
+- `scripts/kappa_anti_flail.sh`, `scripts/kappa_sse_recon.sh` — probe/recon CLIs
+- `packages/llm/test/anomaly-*.test.ts` — the 9 capability-contract tests (D-2026-10-23)
+
 ## Building the main `kappa` binary
 
-From the monorepo root (`/home/toxic/estate/ranch/kappa/kappa-code`):
+From the monorepo root (`/home/toxic/pens/olympus/products/kappa/kappa-code`):
 
 ```bash
 bun install          # first time / after dep changes (long)
@@ -59,7 +89,8 @@ KAPPA_SKIP_BUNDLED_BWRAP=1 bun run --cwd packages/cli script/build.ts --single -
 ```
 
 Output: `packages/cli/dist/@kappacode/cli-linux-x64/bin/kappa` (scoped package output).
-Deployed location on this box: `/usr/lib/kappa/kappa` (and the `kappa` shim).
+Deployed location on this box: `~/.local/bin/kappa` → kappa-code dist (per the estate bin
+contract; the `kappa` shim and `/usr/lib/kappa/kappa` are the older root-installed copy).
 
 ## Monorepo packages (kappa-code)
 

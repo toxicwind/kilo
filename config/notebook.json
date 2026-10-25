@@ -1,5 +1,5 @@
 {
-  "session": "probe-1792886431352",
+  "session": "fuzz-1792886458004",
   "base": "https://freeinference.org/v1",
   "framing": {
     "probed": false,
@@ -83,6 +83,14 @@
       "selfNgram": 0,
       "narration": 0,
       "promises": 0
+    },
+    {
+      "path": "/models",
+      "status": 200,
+      "ctype": "application/json",
+      "bytes": 3296,
+      "verdict": "Buffered",
+      "note": "{\"object\":\"list\",\"data\":[{\"id\":\"glm-5.3-flash\",\"name\":\"GLM-5.3 Flash\",\"object\":\"model\",\"created\":1792713590,\"owned_by\":\""
     }
   ]
 }
