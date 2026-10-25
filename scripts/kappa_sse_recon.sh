@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Make executable: chmod +x
 set -euo pipefail
 
 # --- Configuration ---------------------------------------------------------

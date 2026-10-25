@@ -1,5 +1,5 @@
 {
-  "session": "probe-1792873493914",
+  "session": "probe-1792886431352",
   "base": "https://freeinference.org/v1",
   "framing": {
     "probed": false,
@@ -21,7 +21,7 @@
   "reasoningPassthrough": {
     "honored": false,
     "field": null,
-    "model": "glm-5.3-flash"
+    "model": "minimax-m3"
   },
   "loopTendency": {
     "selfNgram": 0,
@@ -55,6 +55,30 @@
     {
       "kind": "completions",
       "model": "glm-5.3-flash",
+      "honored": false,
+      "selfNgram": 0,
+      "narration": 0,
+      "promises": 0
+    },
+    {
+      "kind": "completions",
+      "model": "minimax-m3",
+      "honored": false,
+      "selfNgram": 0,
+      "narration": 0,
+      "promises": 0
+    },
+    {
+      "kind": "completions",
+      "model": "minimax-m3",
+      "honored": false,
+      "selfNgram": 0,
+      "narration": 0,
+      "promises": 0
+    },
+    {
+      "kind": "completions",
+      "model": "minimax-m3",
       "honored": false,
       "selfNgram": 0,
       "narration": 0,

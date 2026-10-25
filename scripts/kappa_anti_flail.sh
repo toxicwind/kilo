@@ -6,8 +6,8 @@ set -euo pipefail
 API_BASE="${FREEINFERENCE_API_BASE:-https://freeinference.org/v1}"
 API_KEY="${FREEINFERENCE_API_KEY:?export FREEINFERENCE_API_KEY first}"
 MAX_TURNS="${KAPPA_MAX_TURNS:-12}"
-TOOL_BREAKER="${KAPPA_TOOL_BREAKER:-3}"
-LOOP_WINDOW="${KAPPA_LOOP_WINDOW:-3}"
+TOOL_BREAKER="${KAPPA_TOOL_BREAKER:-3}"          # 同一工具连续失败 N 次 -> 禁用该工具
+LOOP_WINDOW="${KAPPA_LOOP_WINDOW:-3}"            # 相同工具+参数出现 N 次 -> 判定循环
 STATE_DIR="/tmp/kappa_anti_flail_$$"
 mkdir -p "$STATE_DIR"
 trap 'rm -rf "$STATE_DIR"' EXIT
@@ -15,17 +15,20 @@ trap 'rm -rf "$STATE_DIR"' EXIT
 log()  { printf '[%s] %s\n' "$(date -u +%H:%M:%S)" "$*" >&2; }
 die()  { log "FATAL: $*"; exit 1; }
 
+# ---------- 1. 动态模型发现：/v1/models -> 内存数组 ----------
 declare -a MODELS=()
-declare -A MODEL_LATENCY_MS=()
+declare -A MODEL_LATENCY_MS=()   # 内存中的延迟账本，供路由用
 
 discover_models() {
   local raw
-  raw=$(curl -sf -H "Authorization: Bearer $API_KEY" "$API_BASE/models") || die "GET /models failed"
+  raw=$(curl -sf -H "Authorization: Bearer $API_KEY" "$API_BASE/models") \
+    || die "GET /models failed"
   mapfile -t MODELS < <(jq -r '.data[].id' <<<"$raw")
   [[ ${#MODELS[@]} -gt 0 ]] || die "model catalog empty"
   log "discovered ${#MODELS[@]} models: ${MODELS[*]}"
 }
 
+# ---------- 2. SSE 端点模糊探测（运行中执行，不阻塞主循环） ----------
 SSE_ENDPOINT=""
 fuzz_sse() {
   local base="$API_BASE" p
@@ -42,6 +45,7 @@ fuzz_sse() {
   log "no SSE endpoint found; falling back to buffered /chat/completions"
 }
 
+# ---------- 3. 模型延迟探测（用于路由，而非信任固定 fallback 链） ----------
 probe_latency() {
   local model="$1" t0 t1 resp
   t0=$(date +%s%3N)
@@ -69,6 +73,7 @@ pick_model() {
   echo "$best"
 }
 
+# ---------- 4. tool 执行 + 熔断 ----------
 declare -A TOOL_FAILS=()
 
 run_tool() {
@@ -87,6 +92,7 @@ run_tool() {
   fi
 }
 
+# ---------- 5. 循环指纹 ----------
 loop_hash() { printf '%s|%s' "$1" "$2" | sha256sum | cut -c1-16; }
 declare -a LOOP_FP=()
 declare -A FP_COUNT=()
@@ -98,12 +104,13 @@ record_fp() {
   (( ${FP_COUNT[$fp]} >= LOOP_WINDOW ))
 }
 
+# ---------- 6. 主代理循环 ----------
 main() {
   discover_models
-  fuzz_sse &
+  fuzz_sse &          # 并行探测，不阻塞
   local i
   for i in "${!MODELS[@]}"; do
-    probe_latency "${MODELS[$i]}" &
+    probe_latency "${MODELS[$i]}" &   # 并行探测延迟
   done
   wait
 
@@ -135,6 +142,7 @@ main() {
     fi
 
     content=$(jq -r '.choices[0].message.content // ""' <<<"$resp")
+    # 从内容里抠出 tool/args（兼容模型把 JSON 包在 prose 里的情况）
     tool=$(jq -Rr 'try (capture("\\\"tool\\\"\\s*:\\s*\\\"(?<t>[^\\\"]+)\\\"")?.t) catch ""' <<<"$content")
     args=$(jq -Rr 'try (capture("\\\"args\\\"\\s*:\\s*\\\"(?<a>.*?)\\\"")?.a) catch ""' <<<"$content")
 

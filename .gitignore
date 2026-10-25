@@ -2,3 +2,12 @@
 /kappa-cli/
 /kappa-ble/
 /kappa-code/
+
+# Security boundaries (git-mutator)
+.env
+*.env
+.env.*
+credentials.json
+*.key
+*.pem
+.bak.
