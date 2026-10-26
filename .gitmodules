@@ -1,0 +1,9 @@
+[submodule "kappa-code"]
+	path = kappa-code
+	url = https://github.com/toxicwind/kappa-code.git
+[submodule "kappa-cli"]
+	path = kappa-cli
+	url = https://github.com/toxicwind/kilo-cli.git
+[submodule "kappa-ble"]
+	path = kappa-ble
+	url = /home/toxic/pens/olympus/products/kappa/kappa-ble

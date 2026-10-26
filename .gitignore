@@ -1,7 +1,7 @@
 # de-submoduled standalone peer clones (referenced not owned)
-/kappa-cli/
-/kappa-ble/
-/kappa-code/
+# kappa-cli now a first-class git submodule (hook-synced, see .gitmodules)
+# kappa-ble now a first-class git submodule (hook-synced, see .gitmodules)
+# kappa-code now a first-class git submodule (hook-synced, see .gitmodules)
 
 # Security boundaries (git-mutator)
 .env
