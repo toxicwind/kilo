@@ -1,4 +1,4 @@
-# Ranch Kappa Monorepo
+# Kappa Monorepo (olympus/products/kappa)
 
 Master project holding the kappa forks on this box (awrawr-pc estate). This
 superproject is the single entry point for kappa work; it owns the relationship
@@ -14,7 +14,7 @@ between the CLI engine, the CLI tooling repo, and the build of the main
 | Kappa × ble.sh | `kappa-ble/` | local (toxicwind system-integration) | First-class kappa integration for ble.sh (bash line editor): env-sanity fix, `\q{contrib/kappa-info}` prompt unit, `Ctrl-x k` launch. |
 
 Both are registered as git submodules bound to the **local working forks** under
-`ranch/kappa/kappa-code` and `ranch/kappa/kappa-cli`, so they appear here without a redundant
+`olympus/products/kappa/kappa-code` and `olympus/products/kappa/kappa-cli`, so they appear here without a redundant
 clone.
 
 ## Fork feature: browser-fingerprint HTTP transport
